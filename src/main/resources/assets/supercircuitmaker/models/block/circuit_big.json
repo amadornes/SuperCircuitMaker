@@ -1,0 +1,6 @@
+{
+  "parent": "supercircuitmaker:block/circuit",
+  "textures": {
+    "top":      "supercircuitmaker:block/circuit/big"
+  }
+}
