@@ -1,10 +1,12 @@
-package com.amadornes.scm.api.circuit;
+package com.amadornes.scm.api.circuit.component;
 
 import com.amadornes.scm.api.math.CircuitDirection;
 
 import java.util.EnumSet;
 
 public interface IUpdateQueue {
+
+    boolean isEmpty();
 
     EnumSet<CircuitDirection> getAllUpdates();
 
@@ -13,7 +15,5 @@ public interface IUpdateQueue {
     EnumSet<CircuitDirection> getPlacedComponents();
 
     EnumSet<CircuitDirection> getUpdatedSignals();
-
-    void queueSignalUpdate(CircuitDirection... directions);
 
 }

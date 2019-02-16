@@ -10,6 +10,7 @@ import com.amadornes.scm.api.util.IWorldUpdater;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class ComponentBase<T extends ComponentBase<T>> implements IComponentInterface, IComponent<T> {
 
@@ -72,8 +73,10 @@ public class ComponentBase<T extends ComponentBase<T>> implements IComponentInte
     public void deserialize(String key, PacketBuffer buf, IWorldUpdater updater) {
     }
 
-    public static abstract class Type<C extends ComponentBase<C>, S extends ISystem<?>> implements IComponentType<C, C>, ISystemType<S> {
+    public static abstract class ComponentType<C extends ComponentBase<C>> extends ForgeRegistryEntry<IComponentType<?, ?>> implements IComponentType<C, C> {
+    }
 
+    public static abstract class SystemType<S extends ISystem<?>> extends ForgeRegistryEntry<ISystemType<?>> implements ISystemType<S> {
     }
 
 }

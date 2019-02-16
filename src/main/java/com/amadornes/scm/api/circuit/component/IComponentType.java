@@ -1,23 +1,22 @@
-package com.amadornes.scm.api.circuit;
+package com.amadornes.scm.api.circuit.component;
 
+import com.amadornes.scm.api.circuit.component.quirk.IQuirk;
 import com.amadornes.scm.api.util.CircuitSlot;
+import net.minecraft.state.StateContainer;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.EnumSet;
+import java.util.Set;
 
-public interface IComponentType<I extends IComponentInterface, B extends IComponentBehavior> {
+public interface IComponentType<I extends IComponentInterface, C extends IComponent<I>> extends IForgeRegistryEntry<IComponentType<?, ?>> {
+
+    void fillStateContainer(StateContainer.Builder<IComponentType<I, C>, IComponentState> builder);
 
     EnumSet<CircuitSlot> getSlots();
 
-    boolean requiresTicks();
+    Set<Class<? extends IQuirk>> getQuirks();
 
-    Instance<I, B> create(IComponentData info);
-
-    interface Instance<I extends IComponentInterface, B extends IComponentBehavior> {
-
-        I getInterface();
-
-        B getBehavior();
-
-    }
+    C create();
 
 }

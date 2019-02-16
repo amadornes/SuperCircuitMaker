@@ -105,7 +105,7 @@ public class ComponentLamp extends ComponentBase<ComponentLamp> implements IQuir
 
     }
 
-    public static final class Type extends ComponentBase.Type<ComponentLamp, Logic> {
+    public static final class ComponentType extends ComponentBase.ComponentType<ComponentLamp> {
 
         @Override
         public void fillStateContainer(StateContainer.Builder<IComponentType<ComponentLamp, ComponentLamp>, IComponentState> builder) {
@@ -126,6 +126,10 @@ public class ComponentLamp extends ComponentBase<ComponentLamp> implements IQuir
         public ComponentLamp create() {
             return new ComponentLamp();
         }
+
+    }
+
+    public static final class SystemType extends ComponentBase.SystemType<Logic> {
 
         @Override
         public Logic create(IComponentHost host) {

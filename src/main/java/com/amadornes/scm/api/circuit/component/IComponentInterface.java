@@ -1,12 +1,12 @@
-package com.amadornes.scm.api.circuit;
+package com.amadornes.scm.api.circuit.component;
 
-import com.amadornes.scm.api.circuit.quirk.IQuirk;
+import com.amadornes.scm.api.circuit.component.quirk.IQuirk;
 import com.amadornes.scm.api.math.CircuitDirection;
 import com.amadornes.scm.api.util.CircuitSlot;
 
 public interface IComponentInterface {
 
-    <T extends IQuirk> T getQuirk(Class<T> type);
+    <Q extends IQuirk> Q getQuirk(Class<Q> type);
 
     boolean isConnectable(CircuitSlot slot, CircuitDirection direction);
 
