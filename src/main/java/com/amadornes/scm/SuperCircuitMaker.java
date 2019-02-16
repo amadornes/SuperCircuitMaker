@@ -1,5 +1,6 @@
 package com.amadornes.scm;
 
+import com.amadornes.scm.init.SCMCapabilities;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -20,12 +21,7 @@ public class SuperCircuitMaker {
     }
 
     private void setup(final FMLCommonSetupEvent event) {
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-    }
-
-    public static class RegistryEvents {
-
+        SCMCapabilities.register();
     }
 
 }
