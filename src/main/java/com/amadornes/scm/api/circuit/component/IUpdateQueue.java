@@ -14,6 +14,6 @@ public interface IUpdateQueue {
 
     EnumSet<CircuitDirection> getUpdatedSignals();
 
-    void queueSignalUpdate(CircuitDirection direction);
+    void queueSignalUpdate(CircuitDirection... directions);
 
 }

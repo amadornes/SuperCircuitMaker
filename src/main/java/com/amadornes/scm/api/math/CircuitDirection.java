@@ -9,6 +9,7 @@ public enum CircuitDirection {
     EAST(1, 0, 0);
 
     public static final CircuitDirection[] VALUES = values();
+    public static final CircuitDirection[] HORIZONTALS = { NORTH, SOUTH, WEST, EAST };
 
     private final CircuitPos offset;
 

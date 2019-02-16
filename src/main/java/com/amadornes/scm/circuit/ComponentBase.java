@@ -1,31 +1,38 @@
 package com.amadornes.scm.circuit;
 
-import com.amadornes.scm.api.circuit.*;
+import com.amadornes.scm.api.circuit.component.*;
+import com.amadornes.scm.api.circuit.component.quirk.IQuirk;
+import com.amadornes.scm.api.circuit.system.ISystem;
+import com.amadornes.scm.api.circuit.system.ISystemType;
 import com.amadornes.scm.api.math.CircuitDirection;
-import com.amadornes.scm.api.math.CircuitPos;
 import com.amadornes.scm.api.util.CircuitSlot;
+import com.amadornes.scm.api.util.IWorldUpdater;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 
-public class ComponentBase implements IComponentInterface, IComponentBehavior {
-
-    private IComponentData info;
+public class ComponentBase<T extends ComponentBase<T>> implements IComponentInterface, IComponent<T> {
 
     protected ComponentBase() {
     }
 
-    final void setInfo(IComponentData info) {
-        this.info = info;
+    @Override
+    public T getInterface() {
+        return (T) this;
     }
 
-    protected final IComponentHost getHost() {
-        return info.getHost();
+    @Override
+    public IBlockState getActualState(IBlockState state) {
+        return state;
     }
 
-    protected final CircuitPos getPos() {
-        return info.getPos();
+    @Override
+    public void commit() {
     }
 
-    protected final IUpdateQueue getUpdateQueue() {
-        return info.getUpdateQueue();
+    @Override
+    public <Q extends IQuirk> Q getQuirk(Class<Q> type) {
+        return null;
     }
 
     @Override
@@ -49,60 +56,23 @@ public class ComponentBase implements IComponentInterface, IComponentBehavior {
     }
 
     @Override
-    public void tick() {
+    public NBTTagCompound serializeNBT() {
+        return null;
     }
 
     @Override
-    public void onQueuedUpdates() {
+    public void deserializeNBT(NBTTagCompound tag) {
     }
 
-    protected final boolean isNeighborConnectable(CircuitSlot slot, CircuitDirection direction) {
-        return getHost().getComponent(getPos().offset(direction), slot).isConnectable(slot, direction.getOpposite());
+    @Override
+    public void serialize(String key, PacketBuffer buf) {
     }
 
-    protected final int getStrongInput(CircuitSlot slot, CircuitDirection direction) {
-        return getHost().getComponent(getPos().offset(direction), slot).getStrongOutput(slot, direction.getOpposite());
+    @Override
+    public void deserialize(String key, PacketBuffer buf, IWorldUpdater updater) {
     }
 
-    protected final int getWeakInput(CircuitSlot slot, CircuitDirection direction) {
-        return getHost().getComponent(getPos().offset(direction), slot).getWeakOutput(slot, direction.getOpposite());
-    }
-
-    public static abstract class Type<C extends ComponentBase> implements IComponentType<C, C> {
-
-        protected abstract C create();
-
-        @Override
-        public boolean requiresTicks() {
-            return false;
-        }
-
-        @Override
-        public final Instance<C, C> create(IComponentData info) {
-            C c = create();
-            c.setInfo(info);
-            return new ComponentBase.Instance<>(c);
-        }
-
-    }
-
-    private static final class Instance<C extends ComponentBase> implements IComponentType.Instance<C, C> {
-
-        private final C component;
-
-        private Instance(C component) {
-            this.component = component;
-        }
-
-        @Override
-        public C getInterface() {
-            return component;
-        }
-
-        @Override
-        public C getBehavior() {
-            return component;
-        }
+    public static abstract class Type<C extends ComponentBase<C>, S extends ISystem<?>> implements IComponentType<C, C>, ISystemType<S> {
 
     }
 

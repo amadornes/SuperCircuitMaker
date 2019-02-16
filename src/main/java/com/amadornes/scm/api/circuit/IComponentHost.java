@@ -1,5 +1,7 @@
 package com.amadornes.scm.api.circuit;
 
+import com.amadornes.scm.api.circuit.component.IComponentInterface;
+import com.amadornes.scm.api.circuit.component.IComponentType;
 import com.amadornes.scm.api.math.CircuitDirection;
 import com.amadornes.scm.api.math.CircuitPos;
 import com.amadornes.scm.api.util.CircuitSlot;
@@ -12,7 +14,7 @@ public interface IComponentHost {
 
     IComponentInterface getComponent(CircuitPos pos, CircuitSlot slot);
 
-    <I extends IComponentInterface, B extends IComponentBehavior> IComponentType.Instance<I, B> placeComponent(CircuitPos pos, IComponentType<I, B> componentType);
+    <I extends IComponentInterface> I placeComponent(CircuitPos pos, IComponentType<I, ?> componentType);
 
     boolean removeComponent(CircuitPos pos, CircuitSlot slot);
 
